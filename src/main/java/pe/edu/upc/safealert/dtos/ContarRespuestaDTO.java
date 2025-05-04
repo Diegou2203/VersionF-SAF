@@ -1,15 +1,15 @@
 package pe.edu.upc.safealert.dtos;
 
 public class ContarRespuestaDTO {
-    private int idRol;
+    private String rol;
     private int contarrespuesta;
 
-    public int getIdRol() {
-        return idRol;
+    public String getRol() {
+        return rol;
     }
 
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public int getContarrespuesta() {

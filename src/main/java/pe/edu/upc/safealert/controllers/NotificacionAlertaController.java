@@ -59,8 +59,7 @@ public class NotificacionAlertaController {
         for(String[] columna:filaLista){
             CantidadNotificacionxUserDTO dto = new CantidadNotificacionxUserDTO();
             dto.setUsername(columna[0]);
-            dto.setApellido(columna[1]);
-            dto.setCantidad(Integer.parseInt(columna[2]));
+            dto.setCantidad(Integer.parseInt(columna[1]));
             dtoLista.add(dto);
         }
         return dtoLista;

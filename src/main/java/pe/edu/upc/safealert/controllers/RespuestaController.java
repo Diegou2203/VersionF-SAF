@@ -71,7 +71,7 @@ public class RespuestaController {
         List<String[]> filaLista = reS.contarrespuesta();
         for (String[] columna : filaLista) {
             ContarRespuestaDTO dto = new ContarRespuestaDTO();
-            dto.setIdRol(Integer.parseInt(columna[0]));
+            dto.setRol(columna[0]);
             dto.setContarrespuesta(Integer.parseInt(columna[1]));
             dtoLista.add(dto);
         }
