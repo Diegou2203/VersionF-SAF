@@ -1,5 +1,6 @@
 package pe.edu.upc.safealert.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,49 +13,49 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recordatoriosimulacro")
+@Slf4j
 public class RecordatorioSimulacroController {
+
     @Autowired
     private IRecordatorioSimulacroService rsS;
 
     @GetMapping
     public List<RecordatorioSimulacroDTO> listarRecordatorioSimulacro() {
-        return rsS.list().stream().map(x->{
+        log.info("Solicitud GET para listar recordatorios de simulacro");
+        return rsS.list().stream().map(x -> {
             ModelMapper modelMapper = new ModelMapper();
             return modelMapper.map(x, RecordatorioSimulacroDTO.class);
         }).collect(Collectors.toList());
     }
 
-
     @PostMapping
-    public void insertarRecordatorioSimulacro(@RequestBody RecordatorioSimulacroDTO rsDto){
+    public void insertarRecordatorioSimulacro(@RequestBody RecordatorioSimulacroDTO rsDto) {
+        log.info("Solicitud POST para insertar recordatorio de simulacro: {}", rsDto);
         ModelMapper modelMapper = new ModelMapper();
-        RecordatorioSimulacro rs= modelMapper.map(rsDto, RecordatorioSimulacro.class);
+        RecordatorioSimulacro rs = modelMapper.map(rsDto, RecordatorioSimulacro.class);
         rsS.insert(rs);
+        log.debug("Recordatorio de simulacro insertado correctamente");
     }
 
-    //GET POR ID
     @GetMapping("/{idRecordatorioSimulacro}")
     public RecordatorioSimulacroDTO listarId(@PathVariable("idRecordatorioSimulacro") int idRecordatorioSimulacro) {
+        log.info("Solicitud GET para obtener recordatorio con ID: {}", idRecordatorioSimulacro);
         ModelMapper m = new ModelMapper();
-        RecordatorioSimulacroDTO rsDTO = m.map(rsS.listarId(idRecordatorioSimulacro), RecordatorioSimulacroDTO.class);
-        return rsDTO;
+        return m.map(rsS.listarId(idRecordatorioSimulacro), RecordatorioSimulacroDTO.class);
     }
 
-    //DELETE
     @DeleteMapping("/{idRecordatorioSimulacro}")
     public void eliminarRecordatorioSimulacro(@PathVariable("idRecordatorioSimulacro") int idRecordatorioSimulacro) {
+        log.warn("Solicitud DELETE para eliminar recordatorio con ID: {}", idRecordatorioSimulacro);
         rsS.delete(idRecordatorioSimulacro);
     }
 
-
-    //PUT
     @PutMapping
     public void modificarRecordatorioSimulacro(@RequestBody RecordatorioSimulacroDTO fnDTO) {
+        log.info("Solicitud PUT para modificar recordatorio de simulacro: {}", fnDTO);
         ModelMapper m = new ModelMapper();
         RecordatorioSimulacro rs = m.map(fnDTO, RecordatorioSimulacro.class);
         rsS.update(rs);
+        log.debug("Recordatorio de simulacro modificado correctamente");
     }
-
-
-
 }
