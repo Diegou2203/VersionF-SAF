@@ -1,5 +1,6 @@
 package pe.edu.upc.safealert.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,15 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recursoinformativo")
+@Slf4j
 public class RecursoInformativoController {
+
     @Autowired
     private IRecursoInformativoService riS;
 
     @GetMapping
     public List<RecursoInformativoDTO> listarRecursosInformativos() {
+        log.info("Solicitud GET para listar todos los recursos informativos");
         return riS.list().stream().map(x -> {
             ModelMapper modelMapper = new ModelMapper();
             return modelMapper.map(x, RecursoInformativoDTO.class);
@@ -28,32 +32,38 @@ public class RecursoInformativoController {
 
     @PostMapping
     public void insertar(@RequestBody RecursoInformativoDTO riDTO) {
+        log.info("Solicitud POST para insertar recurso informativo: {}", riDTO);
         ModelMapper modelMapper = new ModelMapper();
         RecursoInformativo ri = modelMapper.map(riDTO, RecursoInformativo.class);
         riS.insert(ri);
+        log.debug("Recurso informativo insertado correctamente");
     }
 
     @GetMapping("/{idRecursoInformativo}")
     public RecursoInformativoDTO listarPorId(@PathVariable("idRecursoInformativo") int idRecursoInformativo) {
+        log.info("Solicitud GET para obtener recurso informativo con ID: {}", idRecursoInformativo);
         ModelMapper modelMapper = new ModelMapper();
-        RecursoInformativoDTO riDTO = modelMapper.map(riS.listarId(idRecursoInformativo), RecursoInformativoDTO.class);
-        return riDTO;
+        return modelMapper.map(riS.listarId(idRecursoInformativo), RecursoInformativoDTO.class);
     }
 
     @DeleteMapping("/{idRecursoInformativo}")
     public void eliminarPorId(@PathVariable("idRecursoInformativo") int idRecursoInformativo) {
+        log.warn("Solicitud DELETE para eliminar recurso informativo con ID: {}", idRecursoInformativo);
         riS.delete(idRecursoInformativo);
     }
 
     @PutMapping
     public void modificar(@RequestBody RecursoInformativoDTO riDTO) {
+        log.info("Solicitud PUT para modificar recurso informativo: {}", riDTO);
         ModelMapper modelMapper = new ModelMapper();
         RecursoInformativo ri = modelMapper.map(riDTO, RecursoInformativo.class);
         riS.update(ri);
+        log.debug("Recurso informativo modificado correctamente");
     }
 
     @GetMapping("/CantidadRecursosPorUsuario")
     public List<CantidadRecursoxUsuarioDTO> cantidadRecursos() {
+        log.info("Solicitud GET para obtener cantidad de recursos informativos por usuario");
         List<CantidadRecursoxUsuarioDTO> dtoLista = new ArrayList<>();
         List<String[]> filaLista = riS.cantidadRecursosPorUsuario();
         for (String[] columna : filaLista) {
