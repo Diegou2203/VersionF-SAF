@@ -21,7 +21,7 @@ public class ComentarioConsultaController {
     @Autowired
     private IComentarioConsultaService coS;
 
-    @GetMapping
+    @GetMapping("/list")
     public List<ComentarioConsultaDTO> listarComentario() {
         log.info("Solicitud GET para listar todos los comentarios");
         return coS.list().stream().map(x -> {
@@ -30,7 +30,7 @@ public class ComentarioConsultaController {
         }).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/insert")
     public void insertar(@RequestBody ComentarioConsultaDTO coDto) {
         log.info("Solicitud POST para insertar un nuevo comentario: {}", coDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -54,7 +54,7 @@ public class ComentarioConsultaController {
         coS.delete(idComentario);
     }
 
-    @PutMapping
+    @PutMapping("/modify")
     public void modificar(@RequestBody ComentarioConsultaDTO coDTO) {
         log.info("Solicitud PUT para modificar comentario: {}", coDTO);
         ModelMapper m = new ModelMapper();

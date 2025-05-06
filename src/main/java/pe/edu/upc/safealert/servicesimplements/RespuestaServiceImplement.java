@@ -41,6 +41,7 @@ public class RespuestaServiceImplement implements IRespuestaService {
     @Override
     public List<Respuesta> buscarportitulo(String titulo) {return reR.buscartitulo(titulo);}
 
+
     @Override
     public List<String[]> contarrespuesta() {
         return reR.contarrespuesta();

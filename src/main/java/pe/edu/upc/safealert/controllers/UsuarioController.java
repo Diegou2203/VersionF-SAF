@@ -22,7 +22,7 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService uS;
 
-    @GetMapping
+    @GetMapping("/list")
     public List<UsuarioDTOListar> listarUsuario() {
         log.info("GET request: listar todos los usuarios");
         return uS.list().stream().map(x -> {
