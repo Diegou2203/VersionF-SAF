@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pe.edu.upc</groupId>
-    <artifactId>SafeAlertWeb</artifactId>
+    <artifactId>SafeAlert</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SafeAlertWeb</name>
-    <description>SafeAlertWeb</description>
+    <name>SafeAlert</name>
+    <description>SafeAlert</description>
     <url/>
     <licenses>
         <license/>
