@@ -1,5 +1,6 @@
 package pe.edu.upc.safealert.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,50 +13,49 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/simulacro")
+@Slf4j
 public class SimulacroController {
 
     @Autowired
     private ISimulacroService sS;
 
-    //GET TODA LA LISTA
     @GetMapping
-    public List<SimulacroDTO> listarSimulacros(){
-        return sS.list().stream().map(x->{
+    public List<SimulacroDTO> listarSimulacros() {
+        log.info("Solicitud GET para listar todos los simulacros");
+        return sS.list().stream().map(x -> {
             ModelMapper modelMapper = new ModelMapper();
             return modelMapper.map(x, SimulacroDTO.class);
         }).collect(Collectors.toList());
     }
 
-    //POST
     @PostMapping
-    public void insertar(@RequestBody SimulacroDTO sDTO){
+    public void insertar(@RequestBody SimulacroDTO sDTO) {
+        log.info("Solicitud POST para insertar simulacro: {}", sDTO);
         ModelMapper modelMapper = new ModelMapper();
-        Simulacro s= modelMapper.map(sDTO, Simulacro.class);
+        Simulacro s = modelMapper.map(sDTO, Simulacro.class);
         sS.insert(s);
+        log.debug("Simulacro insertado correctamente");
     }
 
-    //GET POR ID
     @GetMapping("/{idSimulacro}")
     public SimulacroDTO listarId(@PathVariable("idSimulacro") int idSimulacro) {
+        log.info("Solicitud GET para obtener simulacro con ID: {}", idSimulacro);
         ModelMapper m = new ModelMapper();
-        SimulacroDTO sDTO = m.map(sS.listarId(idSimulacro), SimulacroDTO.class);
-        return sDTO;
+        return m.map(sS.listarId(idSimulacro), SimulacroDTO.class);
     }
 
-    //DELETE
     @DeleteMapping("/{idSimulacro}")
     public void eliminar(@PathVariable("idSimulacro") int idSimulacro) {
+        log.warn("Solicitud DELETE para eliminar simulacro con ID: {}", idSimulacro);
         sS.delete(idSimulacro);
     }
 
-
-    //PUT
     @PutMapping
     public void modificar(@RequestBody SimulacroDTO sDTO) {
+        log.info("Solicitud PUT para modificar simulacro: {}", sDTO);
         ModelMapper m = new ModelMapper();
         Simulacro s = m.map(sDTO, Simulacro.class);
         sS.update(s);
+        log.debug("Simulacro modificado correctamente");
     }
-
 }
-
