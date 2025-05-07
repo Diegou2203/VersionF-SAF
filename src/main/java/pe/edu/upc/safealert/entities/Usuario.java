@@ -1,9 +1,11 @@
 package pe.edu.upc.safealert.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Usuario")
@@ -31,39 +33,9 @@ public class Usuario implements Serializable {
     @Column(name = "fecha_Registro", nullable = false)
     private LocalDate fecha_Registro;
 
-    @ManyToOne
-    @JoinColumn(name="idRol")
-    private Rol rol;
-
-
-    public Usuario() { }
-
-    public Usuario(int idUsuario, String username, String correo, String password, boolean enabled, String telefono, LocalDate fecha_Registro, Rol rol) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.correo = correo;
-        this.password = password;
-        this.enabled = enabled;
-        this.telefono = telefono;
-        this.fecha_Registro = fecha_Registro;
-        this.rol = rol;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Rol> roles;
 
     public String getCorreo() {
         return correo;
@@ -77,11 +49,12 @@ public class Usuario implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean getEnabled() {
+        return enabled;
     }
 
-    public boolean getEnabled() {
+
+    public boolean isEnabled() {
         return enabled;
     }
 
@@ -105,11 +78,34 @@ public class Usuario implements Serializable {
         this.fecha_Registro = fecha_Registro;
     }
 
-    public Rol getRol() {
-        return rol;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
+
+    public Usuario() { }
+
+    public Usuario(int idUsuario, String username) {
+        this.idUsuario = idUsuario;
+        this.username = username;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

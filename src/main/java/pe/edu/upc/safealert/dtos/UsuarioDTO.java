@@ -12,7 +12,6 @@ public class UsuarioDTO {
     private boolean enabled;
     private String telefono;
     private LocalDate fecha_Registro;
-    private Rol rol;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -46,7 +45,7 @@ public class UsuarioDTO {
         this.password = password;
     }
 
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
@@ -68,13 +67,5 @@ public class UsuarioDTO {
 
     public void setFecha_Registro(LocalDate fecha_Registro) {
         this.fecha_Registro = fecha_Registro;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
     }
 }

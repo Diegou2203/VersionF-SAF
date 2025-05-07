@@ -2,6 +2,7 @@ package pe.edu.upc.safealert.servicesinterfaces;
 
 import pe.edu.upc.safealert.entities.Rol;
 
+import javax.swing.*;
 import java.util.List;
 
 public interface IRolService {
