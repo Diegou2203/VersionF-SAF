@@ -11,8 +11,8 @@ import java.util.List;
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query(value = "SELECT u.username, u.telefono, u.correo, ub.ciudad\n" +
-            "FROM usuario u \n" +
-            "INNER JOIN ubicacion ub ON u.id_ubicacion = ub.id_ubicacion\n" +
+            "FROM usuario u\n" +
+            "INNER JOIN ubicacion ub ON u.id_usuario = ub.id_usuario\n" +
             "INNER JOIN fenomeno_natural fn ON ub.id_ubicacion = fn.id_ubicacion\n" +
             "WHERE UPPER(fn.intensidad) = 'ALTA' AND fn.activo = true\n" +
             "GROUP BY u.username, u.telefono, u.correo, ub.ciudad",
