@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.RecordatorioSimulacroDTO;
 import pe.edu.upc.safealert.entities.RecordatorioSimulacro;
@@ -29,6 +30,7 @@ public class RecordatorioSimulacroController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertarRecordatorioSimulacro(@RequestBody RecordatorioSimulacroDTO rsDto) {
         log.info("Solicitud POST para insertar recordatorio de simulacro: {}", rsDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -45,12 +47,14 @@ public class RecordatorioSimulacroController {
     }
 
     @DeleteMapping("/{idRecordatorioSimulacro}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminarRecordatorioSimulacro(@PathVariable("idRecordatorioSimulacro") int idRecordatorioSimulacro) {
         log.warn("Solicitud DELETE para eliminar recordatorio con ID: {}", idRecordatorioSimulacro);
         rsS.delete(idRecordatorioSimulacro);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificarRecordatorioSimulacro(@RequestBody RecordatorioSimulacroDTO fnDTO) {
         log.info("Solicitud PUT para modificar recordatorio de simulacro: {}", fnDTO);
         ModelMapper m = new ModelMapper();

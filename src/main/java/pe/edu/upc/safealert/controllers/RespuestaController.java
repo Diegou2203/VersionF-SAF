@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.CantidadRespuestaxComentarioDTO;
 import pe.edu.upc.safealert.dtos.ContarRespuestaDTO;
@@ -41,6 +42,7 @@ public class RespuestaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody RespuestaDTO reDto) {
         log.info("Solicitud POST para insertar respuesta: {}", reDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -57,12 +59,14 @@ public class RespuestaController {
     }
 
     @DeleteMapping("/{idRespuesta}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idRespuesta") int idRespuesta) {
         log.warn("Solicitud DELETE para eliminar respuesta con ID: {}", idRespuesta);
         reS.delete(idRespuesta);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody RespuestaDTO reDTO) {
         log.info("Solicitud PUT para modificar respuesta: {}", reDTO);
         ModelMapper m = new ModelMapper();
@@ -72,6 +76,7 @@ public class RespuestaController {
     }
 
     @GetMapping("/CantidadRespuestasPorAdmin")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<ContarRespuestaDTO> cantidadPorrespuesta() {
         log.info("Solicitud GET para contar respuestas por rol de administrador");
         List<ContarRespuestaDTO> dtoLista = new ArrayList<>();
@@ -86,6 +91,7 @@ public class RespuestaController {
     }
 
     @GetMapping("/CantidadRespuestasPorComentario")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<CantidadRespuestaxComentarioDTO> cantidadRespuestas() {
         log.info("Solicitud GET para contar respuestas por comentario");
         List<CantidadRespuestaxComentarioDTO> dtoLista = new ArrayList<>();

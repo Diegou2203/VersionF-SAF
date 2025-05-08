@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.ComentarioConsultaDTO;
 import pe.edu.upc.safealert.dtos.ContarComentarioDTO;
@@ -65,6 +66,7 @@ public class ComentarioConsultaController {
 
     // GET: cantidad de comentarios por usuario
     @GetMapping("/CantidadesComentariosPorUsuario")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<ContarComentarioDTO> cantidadPorComentario() {
         log.info("Solicitud GET para obtener cantidad de comentarios por usuario");
         List<ContarComentarioDTO> dtoLista = new ArrayList<>();

@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.UbicacionDTO;
 import pe.edu.upc.safealert.entities.Ubicacion;
@@ -29,6 +30,7 @@ public class UbicacionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody UbicacionDTO uDTO) {
         log.info("Solicitud POST para insertar una nueva ubicación: {}", uDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -45,12 +47,14 @@ public class UbicacionController {
     }
 
     @DeleteMapping("/{idUbicacion}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idUbicacion") int idUbicacion) {
         log.warn("Solicitud DELETE para eliminar ubicación con ID: {}", idUbicacion);
         uS.delete(idUbicacion);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody UbicacionDTO uDTO) {
         log.info("Solicitud PUT para modificar ubicación: {}", uDTO);
         ModelMapper m = new ModelMapper();

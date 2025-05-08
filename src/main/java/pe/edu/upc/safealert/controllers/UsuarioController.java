@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.UsuarioDTO;
 import pe.edu.upc.safealert.dtos.UsuarioDTOListar;
@@ -63,6 +64,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/ListaUsuariosPorZonasAltoRiesgo")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UsuariosAltoRiesgoDTO> ListarUsuariosEnZonasDeAltoRiesgo() {
         log.info("GET request: listar usuarios en zonas de alto riesgo");
         List<String[]> data = uS.findUsuariosEnZonasDeAltoRiesgo();

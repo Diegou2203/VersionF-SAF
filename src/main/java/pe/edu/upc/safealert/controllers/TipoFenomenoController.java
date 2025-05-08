@@ -3,6 +3,7 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.TipoFenomenoDTO;
 import pe.edu.upc.safealert.entities.TipoFenomeno;
@@ -29,6 +30,7 @@ public class TipoFenomenoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody TipoFenomenoDTO tfDTO) {
         log.info("Solicitud POST para insertar tipo de fenómeno: {}", tfDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -45,12 +47,14 @@ public class TipoFenomenoController {
     }
 
     @DeleteMapping("/{idTipoFenomeno}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idTipoFenomeno") int idTipoFenomeno) {
         log.warn("Solicitud DELETE para eliminar tipo de fenómeno con ID: {}", idTipoFenomeno);
         tS.delete(idTipoFenomeno);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody TipoFenomenoDTO tfDTO) {
         log.info("Solicitud PUT para modificar tipo de fenómeno: {}", tfDTO);
         ModelMapper m = new ModelMapper();
