@@ -43,8 +43,8 @@ public class RespuestaServiceImplement implements IRespuestaService {
 
 
     @Override
-    public List<String[]> contarrespuesta() {
-        return reR.contarrespuesta();
+    public List<String[]> cantidadRespuestasPorUsuario() {
+        return reR.cantidadRespuestasPorUsuario();
     }
 
     public List<String[]> cantidadRespuestasPorComentario() {

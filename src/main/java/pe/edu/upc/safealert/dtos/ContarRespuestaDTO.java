@@ -1,15 +1,25 @@
 package pe.edu.upc.safealert.dtos;
 
 public class ContarRespuestaDTO {
-    private String rol;
+    private String username;
+    private String titulo;
     private int contarrespuesta;
+    private String contenido;
 
-    public String getRol() {
-        return rol;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public int getContarrespuesta() {
@@ -18,5 +28,13 @@ public class ContarRespuestaDTO {
 
     public void setContarrespuesta(int contarrespuesta) {
         this.contarrespuesta = contarrespuesta;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 }

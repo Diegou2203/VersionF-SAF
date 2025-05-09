@@ -75,16 +75,18 @@ public class RespuestaController {
         log.debug("Respuesta modificada correctamente");
     }
 
-    @GetMapping("/CantidadRespuestasPorAdmin")
+    @GetMapping("/CantidadRespuestasPorUsuario")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<ContarRespuestaDTO> cantidadPorrespuesta() {
+    public List<ContarRespuestaDTO> cantidadRespuestasPorUsuario() {
         log.info("Solicitud GET para contar respuestas por rol de administrador");
         List<ContarRespuestaDTO> dtoLista = new ArrayList<>();
-        List<String[]> filaLista = reS.contarrespuesta();
+        List<String[]> filaLista = reS.cantidadRespuestasPorUsuario();
         for (String[] columna : filaLista) {
             ContarRespuestaDTO dto = new ContarRespuestaDTO();
-            dto.setRol(columna[0]);
-            dto.setContarrespuesta(Integer.parseInt(columna[1]));
+            dto.setUsername(columna[0]);
+            dto.setTitulo(columna[1]);
+            dto.setContenido(columna[2]);
+            dto.setContarrespuesta(Integer.parseInt(columna[3]));
             dtoLista.add(dto);
         }
         return dtoLista;

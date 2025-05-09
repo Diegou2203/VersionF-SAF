@@ -18,12 +18,12 @@ public interface IRespuestaRepository extends JpaRepository<Respuesta, Integer> 
             "    r.titulo LIKE %:titulo%")
     public List<Respuesta> buscartitulo(@Param("titulo") String titulo);
 
-    @Query(value = "SELECT r.rol, COUNT(*) AS cantidad_respuestas\n" +
-            "FROM usuario u\n" +
-            "INNER JOIN respuesta rp ON u.id_usuario=rp.id_usuario\n" +
-            "INNER JOIN rol r ON u.id_rol=r.id_rol\n" +
-            "GROUP BY r.rol",nativeQuery = true)
-    public List<String[]> contarrespuesta();
+    @Query(value = "SELECT u.username, r.titulo, r.contenido, COUNT(r.id_respuesta) AS cantidad_respuestas\n" +
+            "FROM Usuario u\n" +
+            "JOIN Respuesta r ON u.id_usuario = r.id_usuario\n" +
+            "GROUP BY u.username, r.titulo, r.contenido\n" +
+            "ORDER BY cantidad_respuestas DESC",nativeQuery = true)
+    public List<String[]> cantidadRespuestasPorUsuario();
 
     @Query(value = "SELECT cc.contenido, cc.estado, COUNT(id_respuesta)\n" +
             "FROM comentario_consulta cc\n" +
