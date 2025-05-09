@@ -6,9 +6,8 @@ import pe.edu.upc.safealert.entities.Usuario;
 public class RolDTO {
 
     private int idRol;
-    private String Descripcion;
     private String rol;
-    private Usuario user;
+    private Usuario usuario;
 
     public int getIdRol() {
         return idRol;
@@ -16,14 +15,6 @@ public class RolDTO {
 
     public void setIdRol(int idRol) {
         this.idRol = idRol;
-    }
-
-    public String getDescripcion() {
-        return Descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
     }
 
     public String getRol() {
@@ -34,11 +25,11 @@ public class RolDTO {
         this.rol = rol;
     }
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

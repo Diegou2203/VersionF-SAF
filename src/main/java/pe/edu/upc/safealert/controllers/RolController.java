@@ -37,7 +37,7 @@ public class RolController {
         log.debug("Rol insertado correctamente");
     }
 
-    @GetMapping("{idRol}")
+    @GetMapping("/{idRol}")
     public RolDTO listarId(@PathVariable("idRol") int idRol) {
         log.info("Solicitud GET para obtener rol por ID: {}", idRol);
         ModelMapper m = new ModelMapper();
@@ -54,8 +54,10 @@ public class RolController {
     }
 
     @DeleteMapping("/{idRol}")
-    public void deleteRol(@PathVariable("idRol") int idRol) {
-        log.warn("Solicitud DELETE para eliminar rol con ID: {}", idRol);
+    public void eliminarRol(@PathVariable("idRol") int idRol) {
+        log.info("Solicitud DELETE para eliminar un rol: {}", idRol);
         rS.delete(idRol);
     }
+
+
 }

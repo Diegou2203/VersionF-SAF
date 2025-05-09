@@ -1,6 +1,5 @@
 package pe.edu.upc.safealert.dtos;
 
-import pe.edu.upc.safealert.entities.Rol;
 
 import java.time.LocalDate;
 
@@ -10,7 +9,6 @@ public class UsuarioDTOListar {
     private String correo;
     private String telefono;
     private LocalDate fecha_Registro;
-    private Rol rol;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -50,14 +48,6 @@ public class UsuarioDTOListar {
 
     public void setFecha_Registro(LocalDate fecha_Registro) {
         this.fecha_Registro = fecha_Registro;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
     }
 }
 

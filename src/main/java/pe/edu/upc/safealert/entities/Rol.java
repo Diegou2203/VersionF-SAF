@@ -5,41 +5,25 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "rol",uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "rol"})})
+@Table(name = "rol",uniqueConstraints = {@UniqueConstraint(columnNames = {"idUsuario", "rol"})})
 public class Rol implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRol;
-    @Column(name = "Descripcion", nullable = false,length = 35)
-    private String Descripcion;
 
-    public Rol() {
-    }
-
+    @Column(name="rol", nullable=false, length=50)
     private String rol;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Usuario user;
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario usuario;
 
-    public String getRol() {
-        return rol;
-    }
+    public Rol() {}
 
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
-    public Rol(int idRol, String descripcion) {
+    public Rol(int idRol, String rol, Usuario usuario) {
         this.idRol = idRol;
-        Descripcion = descripcion;
+        this.rol = rol;
+        this.usuario = usuario;
     }
 
     public int getIdRol() {
@@ -50,11 +34,19 @@ public class Rol implements Serializable {
         this.idRol = idRol;
     }
 
-    public String getDescripcion() {
-        return Descripcion;
+    public String getRol() {
+        return rol;
     }
 
-    public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

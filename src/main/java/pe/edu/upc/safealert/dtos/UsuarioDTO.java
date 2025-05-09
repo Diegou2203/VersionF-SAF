@@ -1,7 +1,5 @@
 package pe.edu.upc.safealert.dtos;
 
-import pe.edu.upc.safealert.entities.Rol;
-
 import java.time.LocalDate;
 
 public class UsuarioDTO {
@@ -45,7 +43,7 @@ public class UsuarioDTO {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 

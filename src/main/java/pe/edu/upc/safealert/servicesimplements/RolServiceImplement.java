@@ -26,7 +26,8 @@ public class RolServiceImplement implements IRolService {
     public Rol listarId(int idRol) {return rR.findById(idRol).orElse(new Rol());}
 
     @Override
-    public void delete(int idRol) {rR.deleteById(idRol);
+    public void delete(int idRol) {
+        rR.deleteById(idRol);
     }
 
     @Override
