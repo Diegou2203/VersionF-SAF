@@ -32,7 +32,7 @@ public class UsuarioController {
         }).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/insert")
     public void insertarUsuario(@RequestBody UsuarioDTO fNDto) {
         log.info("POST request: insertar nuevo usuario: {}", fNDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -41,20 +41,20 @@ public class UsuarioController {
         log.debug("Usuario insertado exitosamente");
     }
 
-    @GetMapping("/{idUsuario}")
+    @GetMapping("/list/{idUsuario}")
     public UsuarioDTOListar listarId(@PathVariable("idUsuario") int idUsuario) {
         log.info("GET request: obtener usuario con ID: {}", idUsuario);
         ModelMapper m = new ModelMapper();
         return m.map(uS.listarId(idUsuario), UsuarioDTOListar.class);
     }
 
-    @DeleteMapping("/{idUsuario}")
+    @DeleteMapping("/delete/{idUsuario}")
     public void eliminarUsuario(@PathVariable("idUsuario") int idUsuario) {
         log.warn("DELETE request: eliminar usuario con ID: {}", idUsuario);
         uS.delete(idUsuario);
     }
 
-    @PutMapping
+    @PutMapping("/modify")
     public void modificarUsuario(@RequestBody UsuarioDTO fnDTO) {
         log.info("PUT request: modificar usuario: {}", fnDTO);
         ModelMapper m = new ModelMapper();
@@ -63,7 +63,7 @@ public class UsuarioController {
         log.debug("Usuario modificado exitosamente");
     }
 
-    @GetMapping("/ListaUsuariosPorZonasAltoRiesgo")
+    @GetMapping("/list/ListaUsuariosPorZonasAltoRiesgo")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<UsuariosAltoRiesgoDTO> ListarUsuariosEnZonasDeAltoRiesgo() {
         log.info("GET request: listar usuarios en zonas de alto riesgo");

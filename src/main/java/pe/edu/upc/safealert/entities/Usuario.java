@@ -1,6 +1,8 @@
 package pe.edu.upc.safealert.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,7 +17,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
 
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
 
     @Column(name = "correo", nullable = false, length = 60)
@@ -33,14 +35,14 @@ public class Usuario implements Serializable {
     @Column(name = "fecha_Registro", nullable = false)
     private LocalDate fecha_Registro;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="idUsuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Rol> roles;
 
     public Usuario() {}
-
+   //public Usuario(int idUsuario, String username, String correo, String password, boolean enabled, String telefono, LocalDate fecha_Registro) {
     public Usuario(int idUsuario, String username, String correo, String password, boolean enabled, String telefono, LocalDate fecha_Registro, List<Rol> roles) {
+
         this.idUsuario = idUsuario;
         this.username = username;
         this.correo = correo;

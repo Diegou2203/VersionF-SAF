@@ -1,5 +1,6 @@
 package pe.edu.upc.safealert.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Rol implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     public Rol() {}

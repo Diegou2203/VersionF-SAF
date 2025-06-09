@@ -1,8 +1,12 @@
 package pe.edu.upc.safealert.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.RolDTO;
 import pe.edu.upc.safealert.entities.Rol;
@@ -19,7 +23,7 @@ public class RolController {
     @Autowired
     private IRolService rS;
 
-    @GetMapping
+    @GetMapping("/list")
     public List<RolDTO> listarRol() {
         log.info("Solicitud GET para listar todos los roles");
         return rS.list().stream().map(x -> {
@@ -28,7 +32,7 @@ public class RolController {
         }).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/insert")
     public void insertarRol(@RequestBody RolDTO RDto) {
         log.info("Solicitud POST para insertar un nuevo rol: {}", RDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -37,14 +41,14 @@ public class RolController {
         log.debug("Rol insertado correctamente");
     }
 
-    @GetMapping("/{idRol}")
+    @GetMapping("/list/{idRol}")
     public RolDTO listarId(@PathVariable("idRol") int idRol) {
         log.info("Solicitud GET para obtener rol por ID: {}", idRol);
         ModelMapper m = new ModelMapper();
         return m.map(rS.listarId(idRol), RolDTO.class);
     }
 
-    @PutMapping
+    @PutMapping("/modify")
     public void modificarRol(@RequestBody RolDTO RDto) {
         log.info("Solicitud PUT para modificar un rol: {}", RDto);
         ModelMapper m = new ModelMapper();
@@ -53,10 +57,19 @@ public class RolController {
         log.debug("Rol modificado correctamente");
     }
 
-    @DeleteMapping("/{idRol}")
-    public void eliminarRol(@PathVariable("idRol") int idRol) {
+    @DeleteMapping("/delete/{idRol}")
+    public ResponseEntity<?> eliminarRol(@PathVariable("idRol") int idRol) {
         log.info("Solicitud DELETE para eliminar un rol: {}", idRol);
-        rS.delete(idRol);
+        try {
+            rS.delete(idRol);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("No se puede eliminar el rol porque está en uso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado.");
+        }
     }
 
 
