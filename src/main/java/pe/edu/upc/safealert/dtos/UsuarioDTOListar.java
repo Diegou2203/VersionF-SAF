@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class UsuarioDTOListar {
     private int idUsuario;
     private String username;
+    private boolean enabled;
     private String correo;
     private String telefono;
     private LocalDate fecha_Registro;
@@ -48,6 +49,14 @@ public class UsuarioDTOListar {
 
     public void setFecha_Registro(LocalDate fecha_Registro) {
         this.fecha_Registro = fecha_Registro;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
 

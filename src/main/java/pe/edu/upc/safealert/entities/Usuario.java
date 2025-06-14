@@ -35,6 +35,7 @@ public class Usuario implements Serializable {
     @Column(name = "fecha_Registro", nullable = false)
     private LocalDate fecha_Registro;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Rol> roles;
