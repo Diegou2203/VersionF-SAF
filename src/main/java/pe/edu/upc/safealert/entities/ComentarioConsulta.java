@@ -16,26 +16,26 @@ public class ComentarioConsulta {
     @Column(name="tema", nullable = false)
     private String tema;
 
-    @Column(name = "contenido", nullable = false, length = 40)
+    @Column(name = "contenido", nullable = false, length = 200)
     private String contenido;
 
     @Column(name = "estado", nullable = false, length = 40)
     private String estado;
 
     @ManyToOne
-    @JoinColumn(name = "idUsuario")
-    private Usuario usuario;
+    @JoinColumn(name = "idRespuesta")
+    private Respuesta respuesta;
 
     public ComentarioConsulta() {
     }
 
-    public ComentarioConsulta(int idComentario, LocalDate fechaComentario, String tema, String contenido, String estado, Usuario usuario) {
+    public ComentarioConsulta(int idComentario, LocalDate fechaComentario, String tema, String contenido, String estado, Respuesta respuesta) {
         this.idComentario = idComentario;
         this.fechaComentario = fechaComentario;
         this.tema = tema;
         this.contenido = contenido;
         this.estado = estado;
-        this.usuario = usuario;
+        this.respuesta = respuesta;
     }
 
     public int getIdComentario() {
@@ -78,12 +78,12 @@ public class ComentarioConsulta {
         this.estado = estado;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Respuesta getRespuesta() {
+        return respuesta;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
     }
 }
 

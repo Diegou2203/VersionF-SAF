@@ -1,6 +1,6 @@
 package pe.edu.upc.safealert.dtos;
 
-import pe.edu.upc.safealert.entities.Usuario;
+import pe.edu.upc.safealert.entities.Respuesta;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ public class ComentarioConsultaDTO {
     private String tema;
     private String contenido;
     private String estado;
-    private Usuario usuario;
+    private Respuesta respuesta;
 
     public int getIdComentario() {
         return idComentario;
@@ -53,11 +53,11 @@ public class ComentarioConsultaDTO {
         this.estado = estado;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Respuesta getRespuesta() {
+        return respuesta;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
     }
 }
