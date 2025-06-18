@@ -5,11 +5,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.safealert.dtos.BusquedaComentarioPorTemaDTO;
+import pe.edu.upc.safealert.dtos.CantidadRespuestaxComentarioDTO;
 import pe.edu.upc.safealert.dtos.ComentarioConsultaDTO;
 import pe.edu.upc.safealert.dtos.ContarComentarioDTO;
 import pe.edu.upc.safealert.entities.ComentarioConsulta;
 import pe.edu.upc.safealert.servicesinterfaces.IComentarioConsultaService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,20 +67,36 @@ public class ComentarioConsultaController {
         log.debug("Comentario modificado con éxito");
     }
 
-    // GET: cantidad de comentarios por usuario
-    @GetMapping("/list/CantidadesComentariosPorUsuario")
+    @GetMapping("/list/ComentarioPorTema")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<ContarComentarioDTO> cantidadPorComentario() {
-        log.info("Solicitud GET para obtener cantidad de comentarios por usuario");
-        List<ContarComentarioDTO> dtoLista = new ArrayList<>();
-        List<String[]> filaLista = coS.contarcomentariousuario();
+    public List<BusquedaComentarioPorTemaDTO> cantidadPorComentario(@RequestParam String tema) {
+        log.info("Solicitud GET para obtener informacion de un comentario filtrando por tema");
+        List<BusquedaComentarioPorTemaDTO> dtoLista = new ArrayList<>();
+        List<String[]> filaLista = coS.BusquedaPorTema(tema);
         for (String[] columna : filaLista) {
-            ContarComentarioDTO dto = new ContarComentarioDTO();
-            dto.setNombre(columna[0]);
-            dto.setContarcomentario(Integer.parseInt(columna[1]));
+            BusquedaComentarioPorTemaDTO dto = new BusquedaComentarioPorTemaDTO();
+            dto.setUsername(columna[0]);
+            dto.setContenido(columna[1]);
+            dto.setFecha_comentario(LocalDate.parse(columna[2]));
             dtoLista.add(dto);
         }
-        log.debug("Cantidad de comentarios calculada correctamente");
+        log.debug("Comentario filtrado por tema");
+        return dtoLista;
+    }
+
+    @GetMapping("/list/CantidadRespuestasPorComentario")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<CantidadRespuestaxComentarioDTO> cantidadRespuestas() {
+        log.info("Solicitud GET para contar respuestas por comentario");
+        List<CantidadRespuestaxComentarioDTO> dtoLista = new ArrayList<>();
+        List<String[]> filaLista = coS.cantidadRespuestasPorComentario();
+        for (String[] columna : filaLista) {
+            CantidadRespuestaxComentarioDTO dto = new CantidadRespuestaxComentarioDTO();
+            dto.setContenido(columna[0]);
+            dto.setEstado(columna[1]);
+            dto.setCantidad(Integer.parseInt(columna[2]));
+            dtoLista.add(dto);
+        }
         return dtoLista;
     }
 }

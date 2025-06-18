@@ -47,7 +47,4 @@ public class RespuestaServiceImplement implements IRespuestaService {
         return reR.cantidadRespuestasPorUsuario();
     }
 
-    public List<String[]> cantidadRespuestasPorComentario() {
-        return reR.cantidadRespuestasPorComentario();
-    }
 }

@@ -76,6 +76,10 @@ public class UsuarioController {
             dto.setTelefono(columna[1]);
             dto.setCorreo(columna[2]);
             dto.setCiudad(columna[3]);
+            dto.setLatitud(Double.parseDouble(columna[4]));
+            dto.setLongitud(Double.parseDouble(columna[5]));
+            dto.setAltitud(Double.parseDouble(columna[6]));
+            dto.setPais(columna[7]);
             dtos.add(dto);
         }
         log.debug("Usuarios en zonas de alto riesgo encontrados: {}", dtos.size());

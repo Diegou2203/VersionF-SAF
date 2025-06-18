@@ -10,5 +10,6 @@ public interface IComentarioConsultaService {
     public ComentarioConsulta listarId(int idComentario);
     public void delete(int idComentario);
     public void update(ComentarioConsulta co);
-    public List<String[]> contarcomentariousuario();
+    public List<String[]> BusquedaPorTema(String tema);
+    public List<String[]> cantidadRespuestasPorComentario();
 }

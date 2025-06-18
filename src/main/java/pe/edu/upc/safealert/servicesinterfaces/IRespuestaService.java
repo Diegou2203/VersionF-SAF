@@ -17,6 +17,5 @@ public interface IRespuestaService {
 
     public List<Respuesta> buscarportitulo(String titulo);
     public List<String[]> cantidadRespuestasPorUsuario();
-    public List<String[]> cantidadRespuestasPorComentario();
 
 }

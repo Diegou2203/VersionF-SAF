@@ -25,11 +25,6 @@ public interface IRespuestaRepository extends JpaRepository<Respuesta, Integer> 
             "ORDER BY cantidad_respuestas DESC",nativeQuery = true)
     public List<String[]> cantidadRespuestasPorUsuario();
 
-    @Query(value = "SELECT cc.contenido, cc.estado, COUNT(id_respuesta)\n" +
-            "FROM comentario_consulta cc\n" +
-            "INNER JOIN respuesta r ON r.id_usuario = cc.id_usuario\n" +
-            "WHERE cc.estado = 'revisado'\n" +
-            "GROUP BY cc.contenido, cc.estado", nativeQuery = true)
-    public List<String[]> cantidadRespuestasPorComentario();
+
 
 }

@@ -92,19 +92,4 @@ public class RespuestaController {
         return dtoLista;
     }
 
-    @GetMapping("/list/CantidadRespuestasPorComentario")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<CantidadRespuestaxComentarioDTO> cantidadRespuestas() {
-        log.info("Solicitud GET para contar respuestas por comentario");
-        List<CantidadRespuestaxComentarioDTO> dtoLista = new ArrayList<>();
-        List<String[]> filaLista = reS.cantidadRespuestasPorComentario();
-        for (String[] columna : filaLista) {
-            CantidadRespuestaxComentarioDTO dto = new CantidadRespuestaxComentarioDTO();
-            dto.setContenido(columna[0]);
-            dto.setEstado(columna[1]);
-            dto.setCantidad(Integer.parseInt(columna[2]));
-            dtoLista.add(dto);
-        }
-        return dtoLista;
-    }
 }

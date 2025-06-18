@@ -33,9 +33,13 @@ public class ComentarioConsultaServiceImplement implements IComentarioConsultaSe
         coR.save(co);}
 
 
+    @Override
+    public List<String[]> BusquedaPorTema(String tema) {
+        return coR.BusquedaPorTema(tema);
+    }
 
     @Override
-    public List<String[]> contarcomentariousuario() {
-        return coR.contarcomentariousuario();
+    public List<String[]> cantidadRespuestasPorComentario() {
+        return coR.cantidadRespuestasPorComentario();
     }
 }
