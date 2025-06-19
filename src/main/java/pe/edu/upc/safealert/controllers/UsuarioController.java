@@ -3,6 +3,8 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.UsuarioDTO;
@@ -49,9 +51,17 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/delete/{idUsuario}")
-    public void eliminarUsuario(@PathVariable("idUsuario") int idUsuario) {
-        log.warn("DELETE request: eliminar usuario con ID: {}", idUsuario);
-        uS.delete(idUsuario);
+    public ResponseEntity<String> eliminarUsuario(@PathVariable("idUsuario") int idUsuario) {
+        try {
+            uS.delete(idUsuario);
+            return ResponseEntity.ok("Usuario eliminado correctamente.");
+        } catch (IllegalStateException e) {
+            log.warn("Error al eliminar usuario: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            log.error("Error inesperado al eliminar usuario", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado al eliminar el usuario.");
+        }
     }
 
     @PutMapping("/modify")

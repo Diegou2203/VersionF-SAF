@@ -30,12 +30,28 @@ public class UsuarioServiceImplement implements IUsuarioService {
     public Usuario listarId(int idUsuario) {return uR.findById(idUsuario).orElse(new Usuario());}
 
     @Override
-    public void delete(int idUsuario) {uR.deleteById(idUsuario);}
+    public void delete(int idUsuario) {
+        Usuario usuario = uR.findById(idUsuario).orElse(null);
+        if (usuario != null) {
+            if (usuario.getRoles() != null && !usuario.getRoles().isEmpty()) {
+                throw new IllegalStateException("No se puede eliminar el usuario porque tiene roles asociados. Elimine primero los roles.");
+            }
+            uR.deleteById(idUsuario);
+        }
+    }
 
     @Override
     public void update(Usuario u) {
-        u.setPassword(passwordEncoder.encode(u.getPassword()));
-        uR.save(u);
+        Usuario usuarioExistente = uR.findById(u.getIdUsuario()).orElse(null);
+        if (usuarioExistente != null) {
+            // Preservar los roles existentes
+            u.setRoles(usuarioExistente.getRoles());
+
+            // Codificar nuevamente la contraseña
+            u.setPassword(passwordEncoder.encode(u.getPassword()));
+
+            uR.save(u);
+        }
     }
 
     @Override
