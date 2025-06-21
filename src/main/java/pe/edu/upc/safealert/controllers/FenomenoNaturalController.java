@@ -3,7 +3,6 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.CantidadUbicacionxFDTO;
 import pe.edu.upc.safealert.dtos.FenomenoNaturalDTO;
@@ -33,7 +32,6 @@ public class FenomenoNaturalController {
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody FenomenoNaturalDTO fNDto) {
         log.info("Solicitud POST para insertar fenómeno natural: {}", fNDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -51,14 +49,12 @@ public class FenomenoNaturalController {
     }
 
     @DeleteMapping("/delete/{idFenomenoNatural}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idFenomenoNatural") int idFenomenoNatural) {
         log.warn("Solicitud DELETE para eliminar fenómeno natural con ID: {}", idFenomenoNatural);
         fnS.delete(idFenomenoNatural);
     }
 
     @PutMapping("/modify")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody FenomenoNaturalDTO fnDTO) {
         log.info("Solicitud PUT para modificar fenómeno natural: {}", fnDTO);
         ModelMapper m = new ModelMapper();
@@ -69,7 +65,6 @@ public class FenomenoNaturalController {
 
     // GET: obtener cantidad de fenómenos por ubicación
     @GetMapping("/list/CantidadFenomenosNaturalesPorUbicacion")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<CantidadUbicacionxFDTO> cantidadFenomeno() {
         log.info("Solicitud GET para obtener cantidad de fenómenos por ubicación");
         List<CantidadUbicacionxFDTO> dtoLista = new ArrayList<>();
@@ -86,7 +81,6 @@ public class FenomenoNaturalController {
 
     // GET: obtener histórico de fenómenos por intensidad
     @GetMapping("/list/HistoricoPorIntensidad")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<HistoricoFenomenosDTO> obtenerHistoricoPorIntensidad() {
         log.info("Solicitud GET para obtener histórico de fenómenos por intensidad");
         List<String[]> data = fnS.findHistoricoFenomenosPorIntensidad();

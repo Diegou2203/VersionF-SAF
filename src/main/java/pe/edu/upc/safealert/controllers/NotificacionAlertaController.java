@@ -3,7 +3,6 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.CantidadNotificacionxUserDTO;
 import pe.edu.upc.safealert.dtos.NotificacionAlertaDTO;
@@ -32,7 +31,6 @@ public class NotificacionAlertaController {
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody NotificacionAlertaDTO naDTO) {
         log.info("Solicitud POST para insertar notificación de alerta: {}", naDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -50,7 +48,6 @@ public class NotificacionAlertaController {
     }
 
     @DeleteMapping("/delete/{idNotificacionAlerta}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idNotificacionAlerta") int idNotificacionAlerta) {
         log.warn("Solicitud DELETE para eliminar notificación con ID: {}", idNotificacionAlerta);
         naS.delete(idNotificacionAlerta);
@@ -66,7 +63,6 @@ public class NotificacionAlertaController {
     }
 
     @GetMapping("/list/CantidadNotificacionesRevisadasPorUsuario")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<CantidadNotificacionxUserDTO> cantidadNotificaciones() {
         log.info("Solicitud GET para obtener cantidad de notificaciones revisadas por usuario");
         List<CantidadNotificacionxUserDTO> dtoLista = new ArrayList<>();
@@ -74,7 +70,9 @@ public class NotificacionAlertaController {
         for (String[] columna : filaLista) {
             CantidadNotificacionxUserDTO dto = new CantidadNotificacionxUserDTO();
             dto.setUsername(columna[0]);
-            dto.setCantidad(Integer.parseInt(columna[1]));
+            dto.setTelefono(columna[1]);
+            dto.setCorreo(columna[2]);
+            dto.setCantidad(Integer.parseInt(columna[3]));
             dtoLista.add(dto);
         }
         log.debug("Cantidad de notificaciones revisadas por usuario procesada correctamente");

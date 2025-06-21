@@ -3,12 +3,10 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.BusquedaComentarioPorTemaDTO;
 import pe.edu.upc.safealert.dtos.CantidadRespuestaxComentarioDTO;
 import pe.edu.upc.safealert.dtos.ComentarioConsultaDTO;
-import pe.edu.upc.safealert.dtos.ContarComentarioDTO;
 import pe.edu.upc.safealert.entities.ComentarioConsulta;
 import pe.edu.upc.safealert.servicesinterfaces.IComentarioConsultaService;
 
@@ -68,7 +66,6 @@ public class ComentarioConsultaController {
     }
 
     @GetMapping("/list/ComentarioPorTema")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<BusquedaComentarioPorTemaDTO> cantidadPorComentario(@RequestParam String tema) {
         log.info("Solicitud GET para obtener informacion de un comentario filtrando por tema");
         List<BusquedaComentarioPorTemaDTO> dtoLista = new ArrayList<>();
@@ -85,7 +82,6 @@ public class ComentarioConsultaController {
     }
 
     @GetMapping("/list/CantidadRespuestasPorComentario")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<CantidadRespuestaxComentarioDTO> cantidadRespuestas() {
         log.info("Solicitud GET para contar respuestas por comentario");
         List<CantidadRespuestaxComentarioDTO> dtoLista = new ArrayList<>();

@@ -3,7 +3,6 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.CantidadRecursoxUsuarioDTO;
 import pe.edu.upc.safealert.dtos.RecursoInformativoDTO;
@@ -32,7 +31,6 @@ public class RecursoInformativoController {
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody RecursoInformativoDTO riDTO) {
         log.info("Solicitud POST para insertar recurso informativo: {}", riDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -49,14 +47,12 @@ public class RecursoInformativoController {
     }
 
     @DeleteMapping("/delete/{idRecursoInformativo}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminarPorId(@PathVariable("idRecursoInformativo") int idRecursoInformativo) {
         log.warn("Solicitud DELETE para eliminar recurso informativo con ID: {}", idRecursoInformativo);
         riS.delete(idRecursoInformativo);
     }
 
     @PutMapping("/modify")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody RecursoInformativoDTO riDTO) {
         log.info("Solicitud PUT para modificar recurso informativo: {}", riDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -66,7 +62,6 @@ public class RecursoInformativoController {
     }
 
     @GetMapping("/list/CantidadRecursosPorUsuario")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public List<CantidadRecursoxUsuarioDTO> cantidadRecursos() {
         log.info("Solicitud GET para obtener cantidad de recursos informativos por usuario");
         List<CantidadRecursoxUsuarioDTO> dtoLista = new ArrayList<>();

@@ -3,7 +3,6 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.SugerenciaPreventivaDTO;
 import pe.edu.upc.safealert.entities.SugerenciaPreventiva;
@@ -30,7 +29,6 @@ public class SugerenciaPreventivaController {
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertarSugerenciaPreventiva(@RequestBody SugerenciaPreventivaDTO spDto) {
         log.info("Solicitud POST para insertar sugerencia preventiva: {}", spDto);
         ModelMapper modelMapper = new ModelMapper();
@@ -47,14 +45,12 @@ public class SugerenciaPreventivaController {
     }
 
     @DeleteMapping("/delete/{idSugerenciaPreventiva}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminarSugerenciaPreventiva(@PathVariable("idSugerenciaPreventiva") int idSugerenciaPreventiva) {
         log.warn("Solicitud DELETE para eliminar sugerencia preventiva con ID: {}", idSugerenciaPreventiva);
         spS.delete(idSugerenciaPreventiva);
     }
 
     @PutMapping("/modify")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificarSugerenciaPreventiva(@RequestBody SugerenciaPreventivaDTO spDTO) {
         log.info("Solicitud PUT para modificar sugerencia preventiva: {}", spDTO);
         ModelMapper m = new ModelMapper();

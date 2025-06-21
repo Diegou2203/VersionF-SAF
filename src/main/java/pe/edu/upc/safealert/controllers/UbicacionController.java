@@ -3,12 +3,13 @@ package pe.edu.upc.safealert.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.safealert.dtos.UbicacionDTO;
+import pe.edu.upc.safealert.dtos.UsuariosAltoRiesgoDTO;
 import pe.edu.upc.safealert.entities.Ubicacion;
 import pe.edu.upc.safealert.servicesinterfaces.IUbicacionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,6 @@ public class UbicacionController {
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void insertar(@RequestBody UbicacionDTO uDTO) {
         log.info("Solicitud POST para insertar una nueva ubicación: {}", uDTO);
         ModelMapper modelMapper = new ModelMapper();
@@ -47,19 +47,39 @@ public class UbicacionController {
     }
 
     @DeleteMapping("/delete/{idUbicacion}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminar(@PathVariable("idUbicacion") int idUbicacion) {
         log.warn("Solicitud DELETE para eliminar ubicación con ID: {}", idUbicacion);
         uS.delete(idUbicacion);
     }
 
     @PutMapping("/modify")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void modificar(@RequestBody UbicacionDTO uDTO) {
         log.info("Solicitud PUT para modificar ubicación: {}", uDTO);
         ModelMapper m = new ModelMapper();
         Ubicacion u = m.map(uDTO, Ubicacion.class);
         uS.update(u);
         log.debug("Ubicación modificada correctamente");
+    }
+
+    @GetMapping("/list/ListaUsuariosPorZonasAltoRiesgo")
+    public List<UsuariosAltoRiesgoDTO> ListarUsuariosEnZonasDeAltoRiesgo() {
+        log.info("GET request: listar usuarios en zonas de alto riesgo");
+        List<String[]> data = uS.findUsuariosEnZonasDeAltoRiesgo();
+        List<UsuariosAltoRiesgoDTO> dtos = new ArrayList<>();
+
+        for (String[] columna : data) {
+            UsuariosAltoRiesgoDTO dto = new UsuariosAltoRiesgoDTO();
+            dto.setUsername(columna[0]);
+            dto.setTelefono(columna[1]);
+            dto.setCorreo(columna[2]);
+            dto.setCiudad(columna[3]);
+            dto.setLatitud(Double.parseDouble(columna[4]));
+            dto.setLongitud(Double.parseDouble(columna[5]));
+            dto.setAltitud(Double.parseDouble(columna[6]));
+            dto.setPais(columna[7]);
+            dtos.add(dto);
+        }
+        log.debug("Usuarios en zonas de alto riesgo encontrados: {}", dtos.size());
+        return dtos;
     }
 }

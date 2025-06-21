@@ -10,7 +10,6 @@ public class UsuariosAltoRiesgoDTO {
     private Double altitud;
     private String pais;
 
-
     public String getUsername() {
         return username;
     }
