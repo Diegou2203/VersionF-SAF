@@ -12,14 +12,13 @@ import java.util.List;
 public interface IComentarioConsultaRepository extends JpaRepository<ComentarioConsulta,Integer> {
 
 
-    @Query(value = "SELECT \n" +
-            "    u.username,\n" +
-            "    c.contenido,\n" +
-            "    c.fecha_comentario\n" +
+    @Query(value = "SELECT\n" +
+            "c.contenido,\n" +
+            "c.fecha_comentario\n" +
             "FROM comentario_consulta c\n" +
             "JOIN Respuesta r ON c.id_respuesta = r.id_respuesta\n" +
             "JOIN Usuario u ON r.id_usuario = u.id_usuario\n" +
-            "WHERE c.tema = :tema",nativeQuery = true)
+            "WHERE c.tema = :tema", nativeQuery = true)
     public List<String[]> BusquedaPorTema(@Param("tema")String tema);
 
 

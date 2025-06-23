@@ -72,9 +72,8 @@ public class ComentarioConsultaController {
         List<String[]> filaLista = coS.BusquedaPorTema(tema);
         for (String[] columna : filaLista) {
             BusquedaComentarioPorTemaDTO dto = new BusquedaComentarioPorTemaDTO();
-            dto.setUsername(columna[0]);
-            dto.setContenido(columna[1]);
-            dto.setFecha_comentario(LocalDate.parse(columna[2]));
+            dto.setContenido(columna[0]);
+            dto.setFechaComentario(LocalDate.parse(columna[1]));
             dtoLista.add(dto);
         }
         log.debug("Comentario filtrado por tema");
