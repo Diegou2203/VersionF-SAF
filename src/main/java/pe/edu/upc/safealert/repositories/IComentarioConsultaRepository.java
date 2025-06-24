@@ -25,7 +25,7 @@ public interface IComentarioConsultaRepository extends JpaRepository<ComentarioC
     @Query(value = "SELECT cc.contenido, cc.estado, COUNT(cc.id_respuesta)\n" +
             "            FROM comentario_consulta cc\n" +
             "            INNER JOIN respuesta r ON r.id_respuesta = cc.id_respuesta\n" +
-            "            WHERE cc.estado = 'revisado'\n" +
+            "            WHERE cc.estado = 'Revisado'\n" +
             "            GROUP BY cc.contenido, cc.estado", nativeQuery = true)
     public List<String[]> cantidadRespuestasPorComentario();
 
